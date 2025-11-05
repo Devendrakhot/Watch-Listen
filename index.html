@@ -6,6 +6,7 @@
   <title>Gita Wisdom - Video Series</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script>
     tailwind.config = {
       theme: {
@@ -13,6 +14,10 @@
           fontFamily: {
             poppins: ['Poppins', 'sans-serif'],
           },
+          colors: {
+            'burgundy': '#2A0001',
+            'beige': '#B2A8A0',
+          }
         }
       }
     }
@@ -21,7 +26,7 @@
     .video-preview {
       opacity: 0;
       transition: opacity 0.3s ease;
-      pointer-events: none; /* Allow clicks to pass through to parent */
+      pointer-events: none;
     }
     .video-preview.active {
       opacity: 1;
@@ -29,7 +34,7 @@
     .play-overlay {
       opacity: 1;
       transition: opacity 0.3s ease;
-      pointer-events: none; /* Allow clicks to pass through to parent */
+      pointer-events: none;
     }
     .play-overlay.hidden {
       opacity: 0;
@@ -48,16 +53,15 @@
       from { opacity: 0; transform: scale(0.9); }
       to { opacity: 1; transform: scale(1); }
     }
+    .pendrive-icon {
+      font-size: 1.5rem;
+      margin-right: 8px;
+    }
   </style>
 </head>
 
-<body class="bg-gradient-to-b from-yellow-50 via-white to-orange-50 font-poppins text-gray-800 overflow-x-hidden">
+<body class=" from-beige/30 via-white to-beige/20 font-poppins text-gray-800 overflow-x-hidden">
 
-  <!-- Header Section -->
-  <header class="text-center py-12 px-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white">
-    <h1 class="text-4xl md:text-5xl font-bold mb-4">Gita Wisdom</h1>
-    <p class="text-xl max-w-2xl mx-auto">Discover timeless teachings from the Bhagavad Gita with Swami Chinmayananda</p>
-  </header>
 
   <!-- Video Cards Section -->
   <section id="videoSection" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-20"></section>
@@ -65,7 +69,7 @@
   <!-- 🎥 Popup Modal -->
   <div id="videoModal" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
     <div class="relative w-full max-w-4xl bg-white rounded-2xl overflow-hidden shadow-2xl modal-content">
-      <button id="closeModal" class="absolute -top-12 right-0 text-white text-4xl font-bold hover:text-orange-200 transition-colors z-10">&times;</button>
+      <button id="closeModal" class="absolute -top-12 right-0 text-white text-4xl font-bold hover:text-beige transition-colors z-10">&times;</button>
 
       <div class="w-full h-0 pb-[56.25%] relative bg-black">
         <iframe
@@ -79,26 +83,19 @@
       </div>
 
       <!-- 🧭 Fallback for blocked videos -->
-      <div class="p-6 text-center space-y-3">
-        <a id="youtubeLink" href="#" target="_blank" class="inline-block bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-full font-semibold transition-colors shadow-md">
-          🔴 Watch on YouTube
-        </a>
-        <p class="text-sm text-gray-600">
-          If the video doesn't play here, click above — embedding may be disabled by the owner.
-        </p>
+      <div id="youtubeLink" >
+    
+       
       </div>
     </div>
   </div>
 
-  <!-- Footer Section -->
-  <footer class="bg-gradient-to-r from-orange-600 to-amber-600 text-white py-8 mt-12">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-lg">May the wisdom of the Gita illuminate your path</p>
-      <p class="mt-2 text-sm opacity-80">© 2023 Gita Wisdom. All rights reserved.</p>
-    </div>
-  </footer>
+
 
   <script>
+    // Single thumbnail URL for all videos
+    const COMMON_THUMBNAIL = "https://a1mrxe-5t.myshopify.com/cdn/shop/files/Watch_Listen.png?v=1759911456&width=700";
+
     // 🎬 Array of Cards
     const videoCards = [
       {
@@ -106,12 +103,12 @@
         subtitle: "Awaken the Wisdom Within 🌿",
         description:
           "Dive into timeless teachings with Swami Chinmayananda's talks on the Bhagavad Gita. Experience clarity, inspiration, and peace — one verse at a time.",
-        thumbnail: "https://i.ytimg.com/vi/DuRMvbw-tg4/hqdefault.jpg",
+        thumbnail: COMMON_THUMBNAIL,
         videoId: "DuRMvbw-tg4",
         youtubeLink: "https://www.youtube.com/watch?v=DuRMvbw-tg4",
         playlist:
           "https://www.youtube.com/playlist?list=PLm6DKuwwu5zqslPPdj-sepdn-nTcFLImC",
-        bookLink: "#",
+        pendriveLink: "#",
         quote:
           "Let the Gita speak to your heart — transform your thoughts, actions, and life.",
       },
@@ -120,11 +117,11 @@
         subtitle: "Reflections of Knowledge ✨",
         description:
           "Short insights to help you connect with your inner peace and strength. Practical wisdom for modern living.",
-        thumbnail: "https://i.ytimg.com/vi/7h4nJP3o2xY/hqdefault.jpg",
-        videoId: "7h4nJP3o2xY",
-        youtubeLink: "https://www.youtube.com/watch?v=7h4nJP3o2xY",
+        thumbnail: COMMON_THUMBNAIL,
+        videoId: "ir2o6Vu0d4A",
+        youtubeLink: "https://www.youtube.com/embed/ir2o6Vu0d4A?si=UAPP0lUx-NNW0A0O",
         playlist: "#",
-        bookLink: "#",
+        pendriveLink: "#",
         quote:
           "The true journey is within — every reflection is a new awakening.",
       },
@@ -133,11 +130,11 @@
         subtitle: "Words for the Soul 💫",
         description:
           "Find daily inspiration from timeless wisdom. Each verse uplifts your heart and mind with profound insights.",
-        thumbnail: "https://i.ytimg.com/vi/lTTajzrSkCw/hqdefault.jpg",
+        thumbnail: COMMON_THUMBNAIL,
         videoId: "lTTajzrSkCw",
         youtubeLink: "https://www.youtube.com/watch?v=lTTajzrSkCw",
         playlist: "#",
-        bookLink: "#",
+        pendriveLink: "#",
         quote: "Inspiration is everywhere — you just need to pause and listen.",
       },
     ];
@@ -147,7 +144,7 @@
 
     videoCards.forEach((card, index) => {
       const cardElement = document.createElement('div');
-      cardElement.className = `rounded-3xl overflow-hidden bg-gradient-to-br from-orange-50 via-white to-yellow-50 shadow-xl border border-yellow-200 p-6 h-full flex flex-col fade-in hover:scale-[1.02] hover:shadow-2xl transition-all duration-300`;
+      cardElement.className = `rounded-3xl overflow-hidden bg-gradient-to-br from-beige/20 via-white to-beige/30 shadow-xl border border-beige/50 p-6 h-full flex flex-col fade-in hover:scale-[1.02] hover:shadow-2xl transition-all duration-300`;
       cardElement.style.animationDelay = `${index * 0.1}s`;
       
       cardElement.innerHTML = `
@@ -156,35 +153,33 @@
           <div class="w-full h-48 rounded-2xl overflow-hidden shadow-lg mb-5 relative cursor-pointer video-container" 
                data-video-id="${card.videoId}" 
                data-youtube-link="${card.youtubeLink}">
-            <!-- Thumbnail - properly fitted -->
-            <img src="${card.thumbnail}" alt="${card.title}" class="w-full h-full object-cover thumbnail" id="thumbnail-${card.videoId}" />
+            <!-- Common Thumbnail for all videos -->
+            <img src="${card.thumbnail}" alt="${card.title}" class="w-full h-full object-cover thumbnail" />
             
             <!-- Video Preview (hidden by default) -->
-            <div class="video-preview absolute inset-0 w-full h-full" id="preview-${card.videoId}"></div>
+            <div class="video-preview absolute inset-0 w-full h-full"></div>
             
             <!-- Play Overlay -->
-            <div class="play-overlay absolute inset-0 bg-black/30 flex items-center justify-center" id="overlay-${card.videoId}">
+            <div class="play-overlay absolute inset-0 bg-black/30 flex items-center justify-center">
               <div class="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
-                <div class="w-0 h-0 border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent border-l-[18px] border-l-orange-600 ml-1"></div>
+                <div class="w-0 h-0 border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent border-l-[18px] border-l-burgundy ml-1"></div>
               </div>
             </div>
           </div>
 
           <!-- Content -->
-          <h3 class="text-2xl font-bold text-orange-700 mb-2">${card.title}</h3>
-          <p class="text-base font-semibold text-orange-600 mb-3">${card.subtitle}</p>
+          <h3 class="text-2xl font-bold text-burgundy mb-2">${card.title}</h3>
+          <p class="text-base font-semibold text-burgundy/80 mb-3">${card.subtitle}</p>
           <p class="text-gray-700 text-sm leading-relaxed mb-6 flex-grow">${card.description}</p>
 
           <div class="w-full space-y-3 mt-auto">
-            <a href="${card.playlist}" target="_blank" class="block w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-full font-semibold shadow-md text-sm text-center transition-colors">
-              🔴 Visit Full YouTube Playlist
-            </a>
-            <button onclick="window.location.href='${card.bookLink}'" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-full font-semibold shadow-md text-sm transition-colors">
-              📘 Buy Companion Book
+          
+            <button onclick="window.location.href='${card.pendriveLink}'" class="w-full bg-burgundy hover:bg-burgundy/90 text-white px-4 py-3 rounded-full font-semibold shadow-md text-sm transition-colors">
+              <i class="fas fa-save pendrive-icon"></i> Get Pendrive Collection
             </button>
           </div>
 
-          <div class="mt-6 bg-gradient-to-r from-orange-100 via-yellow-50 to-orange-100 rounded-xl py-3 px-4 text-sm font-medium text-orange-700 shadow-inner w-full">
+          <div class="mt-6 bg-gradient-to-r from-beige/30 via-beige/10 to-beige/30 rounded-xl py-3 px-4 text-sm font-medium text-burgundy shadow-inner w-full">
             "${card.quote}"
           </div>
         </div>
@@ -194,9 +189,9 @@
       
       // Add event listeners for hover functionality
       const videoContainer = cardElement.querySelector('.video-container');
-      const videoPreview = cardElement.querySelector(`#preview-${card.videoId}`);
-      const playOverlay = cardElement.querySelector(`#overlay-${card.videoId}`);
-      const thumbnail = cardElement.querySelector(`#thumbnail-${card.videoId}`);
+      const videoPreview = cardElement.querySelector('.video-preview');
+      const playOverlay = cardElement.querySelector('.play-overlay');
+      const thumbnail = cardElement.querySelector('.thumbnail');
       
       let hoverTimeout;
       let iframe;
@@ -209,7 +204,7 @@
           iframe.allow = "autoplay";
           iframe.className = "w-full h-full";
           iframe.style.border = 'none';
-          iframe.style.pointerEvents = 'none'; // Make iframe non-interactive
+          iframe.style.pointerEvents = 'none';
           
           videoPreview.appendChild(iframe);
           videoPreview.classList.add('active');
