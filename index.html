@@ -71,8 +71,16 @@
       to { opacity: 1; transform: scale(1); }
     }
     .pendrive-icon {
-      font-size: 1.5rem;
-      margin-right: 8px;
+      font-size: 1.3rem;
+      margin-right: 6px;
+    }
+
+    /* Fix for equal card height & aligned buttons */
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
     }
   </style>
 </head>
@@ -97,15 +105,12 @@
           allowfullscreen
         ></iframe>
       </div>
-      <div id="youtubeLink"></div>
     </div>
   </div>
 
   <script>
-    // Single thumbnail URL for all videos
     const COMMON_THUMBNAIL = "https://a1mrxe-5t.myshopify.com/cdn/shop/files/Watch_Listen.png?v=1759911456&width=700";
 
-    // 🎬 Array of Cards
     const videoCards = [
       {
         title: "The Gita Series",
@@ -142,16 +147,15 @@
       },
     ];
 
-    // 🎨 Render Cards Dynamically
     const videoSection = document.getElementById("videoSection");
 
     videoCards.forEach((card, index) => {
       const cardElement = document.createElement('div');
-      cardElement.className = `rounded-3xl overflow-hidden bg-gradient-to-br from-secondary/20 via-white to-secondary/10 shadow-xl border border-secondary/30 p-6 h-full flex flex-col fade-in hover:scale-[1.02] hover:shadow-2xl transition-all duration-300`;
+      cardElement.className = `rounded-3xl overflow-hidden bg-gradient-to-br from-secondary/20 via-white to-secondary/10 shadow-xl border border-secondary/30 p-6 flex flex-col fade-in hover:scale-[1.02] hover:shadow-2xl transition-all duration-300`;
       cardElement.style.animationDelay = `${index * 0.1}s`;
       
       cardElement.innerHTML = `
-        <div class="flex flex-col items-center text-center flex-grow">
+        <div class="card-content text-center flex flex-col flex-grow">
           <div class="w-full h-48 rounded-2xl overflow-hidden shadow-lg mb-5 relative cursor-pointer video-container" 
                data-video-id="${card.videoId}" 
                data-youtube-link="${card.youtubeLink}">
@@ -165,24 +169,22 @@
           </div>
 
           <h3 class="text-2xl font-bold text-primary mb-2 font-philosopher">${card.title}</h3>
-          <p class="text-base font-semibold text-secondary mb-3">${card.subtitle}</p>
-          <p class="text-gray-700 text-sm leading-relaxed mb-6 flex-grow">${card.description}</p>
+          <p class="text-base font-semibold text-secondary mb-3 font-lexend">${card.subtitle}</p>
+          <p class="text-gray-700 text-sm leading-relaxed mb-6 flex-grow font-lexend">${card.description}</p>
 
-          <div class="w-full space-y-3 mt-auto">
-            <button onclick="window.location.href='${card.pendriveLink}'" class="w-full bg-primary hover:bg-primary/90 text-white px-4 py-3 rounded-full font-semibold shadow-md text-sm transition-colors font-lexend">
+          <div class="mt-auto flex flex-col items-center w-full">
+            <button onclick="window.location.href='${card.pendriveLink}'" class="w-full bg-primary hover:bg-primary/90 text-white px-4 py-3 rounded-full font-semibold shadow-md text-sm transition-all font-lexend mb-5">
               <i class="fas fa-save pendrive-icon"></i> Get Pendrive Collection
             </button>
-          </div>
-
-          <div class="mt-6 bg-gradient-to-r from-secondary/20 via-secondary/10 to-secondary/20 rounded-xl py-3 px-4 text-sm font-medium text-primary shadow-inner w-full font-lexend">
-            "${card.quote}"
+            <div class="bg-gradient-to-r from-secondary/20 via-secondary/10 to-secondary/20 rounded-xl py-3 px-4 text-sm font-medium text-primary shadow-inner w-full font-lexend">
+              "${card.quote}"
+            </div>
           </div>
         </div>
       `;
       
       videoSection.appendChild(cardElement);
 
-      // Hover Preview
       const videoContainer = cardElement.querySelector('.video-container');
       const videoPreview = cardElement.querySelector('.video-preview');
       const playOverlay = cardElement.querySelector('.play-overlay');
@@ -215,11 +217,9 @@
         playOverlay.classList.remove('hidden');
       });
 
-      // Click to open modal
-      videoContainer.addEventListener('click', () => openModal(card.videoId, card.youtubeLink));
+      videoContainer.addEventListener('click', () => openModal(card.videoId));
     });
 
-    // 🎥 Modal Logic
     const modal = document.getElementById("videoModal");
     const videoFrame = document.getElementById("videoFrame");
     const closeBtn = document.getElementById("closeModal");
@@ -239,212 +239,6 @@
     closeBtn.addEventListener("click", closeModal);
     modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
     document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
-  </script>
-</body>
-</html>
-
-  <!-- Video Cards Section -->
-  <section id="videoSection" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-20"></section>
-
-  <!-- 🎥 Popup Modal -->
-  <div id="videoModal" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
-    <div class="relative w-full max-w-4xl bg-white rounded-2xl overflow-hidden shadow-2xl modal-content">
-      <button id="closeModal" class="absolute -top-12 right-0 text-white text-4xl font-bold hover:text-beige transition-colors z-10">&times;</button>
-
-      <div class="w-full h-0 pb-[56.25%] relative bg-black">
-        <iframe
-          id="videoFrame"
-          class="absolute top-0 left-0 w-full h-full"
-          src=""
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
-
-      <!-- 🧭 Fallback for blocked videos -->
-      <div id="youtubeLink" >
-    
-       
-      </div>
-    </div>
-  </div>
-
-
-
-  <script>
-    // Single thumbnail URL for all videos
-    const COMMON_THUMBNAIL = "https://a1mrxe-5t.myshopify.com/cdn/shop/files/Watch_Listen.png?v=1759911456&width=700";
-
-    // 🎬 Array of Cards
-    const videoCards = [
-      {
-        title: "The Gita Series",
-        subtitle: "Awaken the Wisdom Within 🌿",
-        description:
-          "Dive into timeless teachings with Swami Chinmayananda's talks on the Bhagavad Gita. Experience clarity, inspiration, and peace — one verse at a time.",
-        thumbnail: COMMON_THUMBNAIL,
-        videoId: "DuRMvbw-tg4",
-        youtubeLink: "https://www.youtube.com/watch?v=DuRMvbw-tg4",
-        playlist:
-          "https://www.youtube.com/playlist?list=PLm6DKuwwu5zqslPPdj-sepdn-nTcFLImC",
-        pendriveLink: "#",
-        quote:
-          "Let the Gita speak to your heart — transform your thoughts, actions, and life.",
-      },
-      {
-        title: "Wisdom Talks",
-        subtitle: "Reflections of Knowledge ✨",
-        description:
-          "Short insights to help you connect with your inner peace and strength. Practical wisdom for modern living.",
-        thumbnail: COMMON_THUMBNAIL,
-        videoId: "ir2o6Vu0d4A",
-        youtubeLink: "https://www.youtube.com/embed/ir2o6Vu0d4A?si=UAPP0lUx-NNW0A0O",
-        playlist: "#",
-        pendriveLink: "#",
-        quote:
-          "The true journey is within — every reflection is a new awakening.",
-      },
-      {
-        title: "Daily Inspiration",
-        subtitle: "Words for the Soul 💫",
-        description:
-          "Find daily inspiration from timeless wisdom. Each verse uplifts your heart and mind with profound insights.",
-        thumbnail: COMMON_THUMBNAIL,
-        videoId: "lTTajzrSkCw",
-        youtubeLink: "https://www.youtube.com/watch?v=lTTajzrSkCw",
-        playlist: "#",
-        pendriveLink: "#",
-        quote: "Inspiration is everywhere — you just need to pause and listen.",
-      },
-    ];
-
-    // 🎨 Render Cards Dynamically
-    const videoSection = document.getElementById("videoSection");
-
-    videoCards.forEach((card, index) => {
-      const cardElement = document.createElement('div');
-      cardElement.className = `rounded-3xl overflow-hidden bg-gradient-to-br from-beige/20 via-white to-beige/30 shadow-xl border border-beige/50 p-6 h-full flex flex-col fade-in hover:scale-[1.02] hover:shadow-2xl transition-all duration-300`;
-      cardElement.style.animationDelay = `${index * 0.1}s`;
-      
-      cardElement.innerHTML = `
-        <div class="flex flex-col items-center text-center flex-grow">
-          <!-- 🎬 Video Container - Main clickable area -->
-          <div class="w-full h-48 rounded-2xl overflow-hidden shadow-lg mb-5 relative cursor-pointer video-container" 
-               data-video-id="${card.videoId}" 
-               data-youtube-link="${card.youtubeLink}">
-            <!-- Common Thumbnail for all videos -->
-            <img src="${card.thumbnail}" alt="${card.title}" class="w-full h-full object-cover thumbnail" />
-            
-            <!-- Video Preview (hidden by default) -->
-            <div class="video-preview absolute inset-0 w-full h-full"></div>
-            
-            <!-- Play Overlay -->
-            <div class="play-overlay absolute inset-0 bg-black/30 flex items-center justify-center">
-              <div class="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
-                <div class="w-0 h-0 border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent border-l-[18px] border-l-burgundy ml-1"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Content -->
-          <h3 class="text-2xl font-bold text-burgundy mb-2">${card.title}</h3>
-          <p class="text-base font-semibold text-burgundy/80 mb-3">${card.subtitle}</p>
-          <p class="text-gray-700 text-sm leading-relaxed mb-6 flex-grow">${card.description}</p>
-
-          <div class="w-full space-y-3 mt-auto">
-          
-            <button onclick="window.location.href='${card.pendriveLink}'" class="w-full bg-burgundy hover:bg-burgundy/90 text-white px-4 py-3 rounded-full font-semibold shadow-md text-sm transition-colors">
-              <i class="fas fa-save pendrive-icon"></i> Get Pendrive Collection
-            </button>
-          </div>
-
-          <div class="mt-6 bg-gradient-to-r from-beige/30 via-beige/10 to-beige/30 rounded-xl py-3 px-4 text-sm font-medium text-burgundy shadow-inner w-full">
-            "${card.quote}"
-          </div>
-        </div>
-      `;
-      
-      videoSection.appendChild(cardElement);
-      
-      // Add event listeners for hover functionality
-      const videoContainer = cardElement.querySelector('.video-container');
-      const videoPreview = cardElement.querySelector('.video-preview');
-      const playOverlay = cardElement.querySelector('.play-overlay');
-      const thumbnail = cardElement.querySelector('.thumbnail');
-      
-      let hoverTimeout;
-      let iframe;
-      
-      videoContainer.addEventListener('mouseenter', () => {
-        hoverTimeout = setTimeout(() => {
-          // Create and show the YouTube iframe for preview
-          iframe = document.createElement('iframe');
-          iframe.src = `https://www.youtube.com/embed/${card.videoId}?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&loop=1&playlist=${card.videoId}`;
-          iframe.allow = "autoplay";
-          iframe.className = "w-full h-full";
-          iframe.style.border = 'none';
-          iframe.style.pointerEvents = 'none';
-          
-          videoPreview.appendChild(iframe);
-          videoPreview.classList.add('active');
-          thumbnail.classList.add('hidden');
-          playOverlay.classList.add('hidden');
-        }, 500);
-      });
-      
-      videoContainer.addEventListener('mouseleave', () => {
-        clearTimeout(hoverTimeout);
-        if (iframe) {
-          iframe.remove();
-          iframe = null;
-        }
-        videoPreview.classList.remove('active');
-        thumbnail.classList.remove('hidden');
-        playOverlay.classList.remove('hidden');
-      });
-      
-      // Click to open modal - attached to the main container
-      videoContainer.addEventListener('click', () => {
-        openModal(card.videoId, card.youtubeLink);
-      });
-    });
-
-    // 🎥 Modal Logic
-    const modal = document.getElementById("videoModal");
-    const videoFrame = document.getElementById("videoFrame");
-    const youtubeLink = document.getElementById("youtubeLink");
-    const closeBtn = document.getElementById("closeModal");
-
-    function openModal(videoId, ytLink) {
-      // Set the video source with autoplay enabled
-      videoFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&enablejsapi=1`;
-      youtubeLink.href = ytLink;
-      modal.classList.remove("hidden");
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      modal.classList.add("hidden");
-      // Stop the video when closing the modal
-      videoFrame.src = "";
-      document.body.style.overflow = 'auto';
-    }
-
-    closeBtn.addEventListener("click", closeModal);
-
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        closeModal();
-      }
-    });
-
-    // Close modal with Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-        closeModal();
-      }
-    });
   </script>
 </body>
 </html>
