@@ -21,7 +21,6 @@
           colors: {
             primary: '#2A0001',
             secondary: '#DAA864',
-            beige: '#EDE7D9',
           },
         },
       },
@@ -75,12 +74,30 @@
       margin-right: 6px;
     }
 
-    /* Fix for equal card height & aligned buttons */
+    /* Equal height + aligned buttons */
+    #videoSection {
+      align-items: stretch;
+    }
+
+    .card-equal {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
     .card-content {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 100%;
+      flex: 1 1 auto;
+    }
+
+    .card-actions {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
     }
   </style>
 </head>
@@ -151,9 +168,9 @@
 
     videoCards.forEach((card, index) => {
       const cardElement = document.createElement('div');
-      cardElement.className = `rounded-3xl overflow-hidden bg-gradient-to-br from-secondary/20 via-white to-secondary/10 shadow-xl border border-secondary/30 p-6 flex flex-col fade-in hover:scale-[1.02] hover:shadow-2xl transition-all duration-300`;
+      cardElement.className = `card-equal rounded-3xl overflow-hidden bg-gradient-to-br from-secondary/20 via-white to-secondary/10 shadow-xl border border-secondary/30 p-6 flex flex-col fade-in hover:scale-[1.02] hover:shadow-2xl transition-all duration-300`;
       cardElement.style.animationDelay = `${index * 0.1}s`;
-      
+
       cardElement.innerHTML = `
         <div class="card-content text-center flex flex-col flex-grow">
           <div class="w-full h-48 rounded-2xl overflow-hidden shadow-lg mb-5 relative cursor-pointer video-container" 
@@ -172,8 +189,8 @@
           <p class="text-base font-semibold text-secondary mb-3 font-lexend">${card.subtitle}</p>
           <p class="text-gray-700 text-sm leading-relaxed mb-6 flex-grow font-lexend">${card.description}</p>
 
-          <div class="mt-auto flex flex-col items-center w-full">
-            <button onclick="window.location.href='${card.pendriveLink}'" class="w-full bg-primary hover:bg-primary/90 text-white px-4 py-3 rounded-full font-semibold shadow-md text-sm transition-all font-lexend mb-5">
+          <div class="card-actions">
+            <button onclick="window.location.href='${card.pendriveLink}'" class="bg-primary hover:bg-primary/90 text-white px-4 py-3 rounded-full font-semibold shadow-md text-sm transition-all font-lexend mb-5 w-full">
               <i class="fas fa-save pendrive-icon"></i> Get Pendrive Collection
             </button>
             <div class="bg-gradient-to-r from-secondary/20 via-secondary/10 to-secondary/20 rounded-xl py-3 px-4 text-sm font-medium text-primary shadow-inner w-full font-lexend">
@@ -182,17 +199,17 @@
           </div>
         </div>
       `;
-      
+
       videoSection.appendChild(cardElement);
 
       const videoContainer = cardElement.querySelector('.video-container');
       const videoPreview = cardElement.querySelector('.video-preview');
       const playOverlay = cardElement.querySelector('.play-overlay');
       const thumbnail = cardElement.querySelector('.thumbnail');
-      
+
       let hoverTimeout;
       let iframe;
-      
+
       videoContainer.addEventListener('mouseenter', () => {
         hoverTimeout = setTimeout(() => {
           iframe = document.createElement('iframe');
@@ -201,14 +218,13 @@
           iframe.className = "w-full h-full";
           iframe.style.border = 'none';
           iframe.style.pointerEvents = 'none';
-          
           videoPreview.appendChild(iframe);
           videoPreview.classList.add('active');
           thumbnail.classList.add('hidden');
           playOverlay.classList.add('hidden');
         }, 400);
       });
-      
+
       videoContainer.addEventListener('mouseleave', () => {
         clearTimeout(hoverTimeout);
         if (iframe) iframe.remove();
