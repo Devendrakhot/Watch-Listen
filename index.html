@@ -35,7 +35,6 @@
 
     <style>
       body {
-       
         color: #2a0001;
         font-family: "Lexend", sans-serif;
       }
@@ -89,7 +88,6 @@
         margin-right: 6px;
       }
 
-      /* Equal height layout */
       #videoSection {
         align-items: stretch;
       }
@@ -106,9 +104,8 @@
         height: 100%;
       }
 
-      /* Fixed text area height to align all cards */
       .text-section {
-        min-height: 120px; /* Adjust this if you want more/less space */
+        min-height: 120px;
         flex-grow: 1;
         display: flex;
         flex-direction: column;
@@ -142,21 +139,13 @@
       >
         <button
           id="closeModal"
-          class="absolute -top-12 right-0 text-white text-4xl font-bold hover:text-secondary transition-colors z-10"
+          class="absolute top-4 right-4 bg-white/90 hover:bg-white text-primary text-2xl w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all z-10"
+          title="Close"
         >
-          &times;
+          <i class="fas fa-times"></i>
         </button>
 
-        <div class="w-full h-0 pb-[56.25%] relative bg-black">
-          <iframe
-            id="videoFrame"
-            class="absolute top-0 left-0 w-full h-full"
-            src=""
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        </div>
+        <div id="videoContainer" class="w-full h-0 pb-[56.25%] relative bg-black overflow-hidden rounded-xl"></div>
       </div>
     </div>
 
@@ -171,8 +160,8 @@
           description:
             "Dive into timeless teachings with Swami Chinmayananda's talks on the Bhagavad Gita.",
           thumbnail: COMMON_THUMBNAIL,
-          videoId: "DuRMvbw-tg4",
-          youtubeLink: "https://www.youtube.com/watch?v=DuRMvbw-tg4",
+          youtubeLink:
+            "https://dfm54yknoh01p.cloudfront.net/Watch-Listen/1-Your-words-reflect-your-state-of-Mind.mp4",
           pendriveLink: "#",
           quote:
             "Let the Gita speak to your heart —transform your thoughts, actions, life.",
@@ -183,8 +172,7 @@
           description:
             "Short insights to help you connect with your inner peace and strength. Practical wisdom for modern living.",
           thumbnail: COMMON_THUMBNAIL,
-          videoId: "ir2o6Vu0d4A",
-          youtubeLink: "https://www.youtube.com/watch?v=ir2o6Vu0d4A",
+          youtubeLink: "https://dfm54yknoh01p.cloudfront.net/Watch-Listen/2-Keep-your-motives-Pure!.mp4",
           pendriveLink: "#",
           quote:
             "The true journey is within — every reflection is a new awakening.",
@@ -195,8 +183,7 @@
           description:
             "Find daily inspiration from timeless wisdom. Each verse uplifts your heart and mind with profound insights.",
           thumbnail: COMMON_THUMBNAIL,
-          videoId: "lTTajzrSkCw",
-          youtubeLink: "https://www.youtube.com/watch?v=lTTajzrSkCw",
+          youtubeLink: "https://dfm54yknoh01p.cloudfront.net/Watch-Listen/3-You-change-the-world-will-change!.mp4",
           pendriveLink: "#",
           quote:
             "Inspiration is everywhere — you just need to pause and listen.",
@@ -213,8 +200,7 @@
         cardElement.innerHTML = `
           <div class="card-content text-center flex flex-col flex-grow">
             <div class="w-full h-48 rounded-2xl overflow-hidden shadow-lg mb-5 relative cursor-pointer video-container" 
-                data-video-id="${card.videoId}" 
-                data-youtube-link="${card.youtubeLink}">
+                data-video-link="${card.youtubeLink}">
               <img src="${card.thumbnail}" alt="${card.title}" class="w-full h-full object-cover thumbnail" />
               <div class="video-preview absolute inset-0 w-full h-full"></div>
               <div class="play-overlay absolute inset-0 bg-black/30 flex items-center justify-center">
@@ -245,52 +231,46 @@
         videoSection.appendChild(cardElement);
 
         const videoContainer = cardElement.querySelector(".video-container");
-        const videoPreview = cardElement.querySelector(".video-preview");
-        const playOverlay = cardElement.querySelector(".play-overlay");
-        const thumbnail = cardElement.querySelector(".thumbnail");
-
-        let hoverTimeout;
-        let iframe;
-
-        videoContainer.addEventListener("mouseenter", () => {
-          hoverTimeout = setTimeout(() => {
-            iframe = document.createElement("iframe");
-            iframe.src = `https://www.youtube.com/embed/${card.videoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${card.videoId}`;
-            iframe.allow = "autoplay";
-            iframe.className = "w-full h-full";
-            iframe.style.border = "none";
-            iframe.style.pointerEvents = "none";
-            videoPreview.appendChild(iframe);
-            videoPreview.classList.add("active");
-            thumbnail.classList.add("hidden");
-            playOverlay.classList.add("hidden");
-          }, 400);
-        });
-
-        videoContainer.addEventListener("mouseleave", () => {
-          clearTimeout(hoverTimeout);
-          if (iframe) iframe.remove();
-          videoPreview.classList.remove("active");
-          thumbnail.classList.remove("hidden");
-          playOverlay.classList.remove("hidden");
-        });
-
-        videoContainer.addEventListener("click", () => openModal(card.videoId));
+        videoContainer.addEventListener("click", () =>
+          openModal(card.youtubeLink)
+        );
       });
 
       const modal = document.getElementById("videoModal");
-      const videoFrame = document.getElementById("videoFrame");
+      const videoContainer = document.getElementById("videoContainer");
       const closeBtn = document.getElementById("closeModal");
 
-      function openModal(videoId) {
-        videoFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+      function openModal(link) {
+        videoContainer.innerHTML = ""; // clear old content
+
+        let element;
+
+        if (link.includes("youtube.com") || link.includes("youtu.be")) {
+          // 🎬 YouTube Video
+          const videoId = link.split("v=")[1]?.split("&")[0] || link.split("/").pop();
+          element = document.createElement("iframe");
+          element.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+          element.allow =
+            "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+          element.allowFullscreen = true;
+          element.className = "absolute top-0 left-0 w-full h-full";
+        } else {
+          // 🎥 Direct MP4 / CDN Video
+          element = document.createElement("video");
+          element.src = link;
+          element.controls = true;
+          element.autoplay = true;
+          element.className = "absolute top-0 left-0 w-full h-full rounded-xl";
+        }
+
+        videoContainer.appendChild(element);
         modal.classList.remove("hidden");
         document.body.style.overflow = "hidden";
       }
 
       function closeModal() {
         modal.classList.add("hidden");
-        videoFrame.src = "";
+        videoContainer.innerHTML = "";
         document.body.style.overflow = "auto";
       }
 
