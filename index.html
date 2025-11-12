@@ -104,6 +104,41 @@
         height: 100%;
       }
 
+      .title-section {
+        min-height: 110px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.25rem;
+        text-align: center;
+        margin-bottom: 0.75rem;
+        width: 100%;
+      }
+
+      .card-title {
+        margin: 0;
+        line-height: 1.35;
+        min-height: calc(1.35em * 3);
+        max-height: calc(1.35em * 3);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+      }
+
+      .card-subtitle {
+        min-height: 1.6em;
+        max-height: 1.6em;
+        margin: 0;
+        line-height: 1.6;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
       .text-section {
         min-height: 120px;
         flex-grow: 1;
@@ -155,38 +190,38 @@
 
       const videoCards = [
         {
-          title: "The Gita Series",
-          subtitle: "Awaken the Wisdom Within 🌿",
+          title: "Your Words Reflect Your State of Mind",
+          subtitle: "(Chapter 1 Verse 3)",
           description:
-            "Dive into timeless teachings with Swami Chinmayananda's talks on the Bhagavad Gita.",
+            "In Chapter 1 Verse 3 of Geeta, learn how your words reflect your state of mind. Dive into the teachings of BhagavadGita with Chinmaya Mission. Emotional distress and inner conflict can cloud judgment and lead to indiscriminate and disrespectful speech, even towards those we deeply respect. It is essential to maintain emotional control and clarity of thought to communicate effectively and respectfully, especially in moments of intense emotion or conflict.",
           thumbnail: COMMON_THUMBNAIL,
           youtubeLink:
             "https://dfm54yknoh01p.cloudfront.net/Watch-Listen/1-Your-words-reflect-your-state-of-Mind.mp4",
           pendriveLink: "#",
           quote:
-            "Let the Gita speak to your heart —transform your thoughts, actions, life.",
+            "Inspirations from the Master - Short Inspiring excerpts from the Holy Geeta. Talks of H.H.Swami Chinmayananda presented by Chinmaya Mission.",
         },
         {
-          title: "Wisdom Talks",
-          subtitle: "Reflections of Knowledge ✨",
+          title: "Keep Your Motives Pure!",
+          subtitle: "(Chapter 1 Verse 7)",
           description:
-            "Short insights to help you connect with your inner peace and strength. Practical wisdom for modern living.",
+            "The moral drawn from Swami Chinmayananda’s teachings is that true leadership requires a balance between strength, empathy, and clear-minded discrimination. A leader must not only have the external skills of strategy and power but also the inner qualities of compassion and righteousness. Mental stability and alignment with a higher purpose (dharma) are essential for making sound decisions and inspiring others. In times of doubt and confusion, one must seek clarity and act with moral conviction, ensuring that actions are in line with the greater good.",
           thumbnail: COMMON_THUMBNAIL,
           youtubeLink: "https://dfm54yknoh01p.cloudfront.net/Watch-Listen/2-Keep-your-motives-Pure!.mp4",
           pendriveLink: "#",
           quote:
-            "The true journey is within — every reflection is a new awakening.",
+            "Inspirations from the Master - Short Inspiring excerpts from the Holy Geeta. Talks of H.H.Swami Chinmayananda presented by Chinmaya Mission.",
         },
         {
-          title: "Daily Inspiration",
-          subtitle: "Words for the Soul 💫",
+          title: "You Change, World Will Change!",
+          subtitle: "(Chapter 2 Verse 3)",
           description:
-            "Find daily inspiration from timeless wisdom. Each verse uplifts your heart and mind with profound insights.",
-          thumbnail: COMMON_THUMBNAIL,
+              "This is not time to run away from life. You change and the world will change.",
+            thumbnail: COMMON_THUMBNAIL,
           youtubeLink: "https://dfm54yknoh01p.cloudfront.net/Watch-Listen/3-You-change-the-world-will-change!.mp4",
           pendriveLink: "#",
           quote:
-            "Inspiration is everywhere — you just need to pause and listen.",
+            "Inspirations from the Master - Short Inspiring excerpts from the Holy Geeta. Talks of H.H.Swami Chinmayananda presented by Chinmaya Mission.",
         },
       ];
 
@@ -210,8 +245,10 @@
               </div>
             </div>
 
-            <h3 class="text-2xl font-bold text-primary mb-2 font-Domine">${card.title}</h3>
-            <p class="text-base font-semibold text-secondary mb-3 font-Anek_Latin">${card.subtitle}</p>
+            <div class="title-section">
+              <h3 class="card-title text-2xl font-bold text-primary font-Domine">${card.title}</h3>
+              <p class="card-subtitle text-base font-semibold text-secondary font-Anek_Latin">${card.subtitle}</p>
+            </div>
 
             <div class="text-section">
               <p class="text-gray-700 text-sm leading-relaxed mb-6 font-Anek_Latin">${card.description}</p>
