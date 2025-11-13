@@ -1,238 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gita Wisdom - Video Series</title>
 
-    <!-- Tailwind & Fonts -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Domine:wght@400;700&family=Anek Latin:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gita Wisdom - Video Series</title>
 
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              Domine: ["Domine", "sans-serif"],
-              Anek_Latin: ["Anek Latin", "sans-serif"],
-            },
-            colors: {
-              primary: "#2A0001",
-              secondary: "#DAA864",
-            },
+  <!-- Tailwind & Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Domine:wght@400;700&family=Anek Latin:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            Domine: ["Domine", "sans-serif"],
+            Anek_Latin: ["Anek Latin", "sans-serif"],
+          },
+          colors: {
+            primary: "#2A0001",
+            secondary: "#DAA864",
           },
         },
-      };
-    </script>
+      },
+    };
+  </script>
 
-    <style>
-      body {
-        color: #2a0001;
-        font-family: "Anek Latin", sans-serif;
-      }
+  <style>
+    body {
+      color: #2a0001;
+      font-family: "Anek Latin", sans-serif;
+    }
 
-      h1,
-      h2,
-      h3,
-      h4,
-      h5 {
-        font-family: "Domine", sans-serif;
-        color: #2a0001;
-      }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      font-family: "Domine", sans-serif;
+      color: #2a0001;
+    }
 
-      .video-preview {
+    .video-preview {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .video-preview.active {
+      opacity: 1;
+    }
+
+    .play-overlay {
+      opacity: 1;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .play-overlay.hidden {
+      opacity: 0;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
         opacity: 0;
-        transition: opacity 0.3s ease;
-        pointer-events: none;
+        transform: translateY(10px);
       }
 
-      .video-preview.active {
+      to {
         opacity: 1;
+        transform: translateY(0);
       }
+    }
 
-      .play-overlay {
-        opacity: 1;
-        transition: opacity 0.3s ease;
-        pointer-events: none;
-      }
+    .pendrive-icon {
+      font-size: 1.3rem;
+      margin-right: 6px;
+    }
 
-      .play-overlay.hidden {
-        opacity: 0;
-      }
+    #videoSection {
+      align-items: stretch;
+    }
 
-      .fade-in {
-        animation: fadeIn 0.6s ease-in-out;
-      }
+    .card-equal {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
 
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
 
-      .pendrive-icon {
-        font-size: 1.3rem;
-        margin-right: 6px;
-      }
+    .title-section {
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 0.25rem;
+      text-align: center;
+      margin-bottom: 0.75rem;
+      width: 100%;
+    }
 
-      #videoSection {
-        align-items: stretch;
-      }
+    .card-title {
+      margin: 0;
+      line-height: 1.35;
+      min-height: calc(1.35em * 3);
+      max-height: calc(1.35em * 3);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+    }
 
-      .card-equal {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-      }
+    .card-subtitle {
+      min-height: 1.6em;
+      max-height: 1.6em;
+      margin: 0;
+      line-height: 1.6;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
 
-      .card-content {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-      }
+    .text-section {
+      min-height: 120px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
 
-      .title-section {
-        min-height: 110px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 0.25rem;
-        text-align: center;
-        margin-bottom: 0.75rem;
-        width: 100%;
-      }
+    .card-actions {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+  </style>
+</head>
 
-      .card-title {
-        margin: 0;
-        line-height: 1.35;
-        min-height: calc(1.35em * 3);
-        max-height: calc(1.35em * 3);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        line-clamp: 3;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-      }
+<body class="font-Anek_Latin text-primary overflow-x-hidden">
+  <!-- Video Cards Section -->
+  <section id="videoSection"
+    class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-20"></section>
 
-      .card-subtitle {
-        min-height: 1.6em;
-        max-height: 1.6em;
-        margin: 0;
-        line-height: 1.6;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
+  <!-- 🎥 Popup Modal -->
+  <div id="videoModal" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
+    <div class="relative w-full max-w-4xl bg-white rounded-2xl overflow-hidden shadow-2xl modal-content">
+      <button id="closeModal"
+        class="absolute top-4 right-4 bg-white/90 hover:bg-white text-primary text-2xl w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all z-10"
+        title="Close">
+        <i class="fas fa-times"></i>
+      </button>
 
-      .text-section {
-        min-height: 120px;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-      }
-
-      .card-actions {
-        margin-top: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-      }
-    </style>
-  </head>
-
-  <body class="font-Anek_Latin text-primary overflow-x-hidden">
-    <!-- Video Cards Section -->
-    <section
-      id="videoSection"
-      class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-20"
-    ></section>
-
-    <!-- 🎥 Popup Modal -->
-    <div
-      id="videoModal"
-      class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4"
-    >
-      <div
-        class="relative w-full max-w-4xl bg-white rounded-2xl overflow-hidden shadow-2xl modal-content"
-      >
-        <button
-          id="closeModal"
-          class="absolute top-4 right-4 bg-white/90 hover:bg-white text-primary text-2xl w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all z-10"
-          title="Close"
-        >
-          <i class="fas fa-times"></i>
-        </button>
-
-        <div id="videoContainer" class="w-full h-0 pb-[56.25%] relative bg-black overflow-hidden rounded-xl"></div>
-      </div>
+      <div id="videoContainer" class="w-full h-0 pb-[56.25%] relative bg-black overflow-hidden rounded-xl"></div>
     </div>
+  </div>
 
-    <script>
-      const COMMON_THUMBNAIL =
-        "https://a1mrxe-5t.myshopify.com/cdn/shop/files/Watch_Listen.png?v=1759911456&width=700";
+  <script>
+    const COMMON_THUMBNAIL =
+      "https://a1mrxe-5t.myshopify.com/cdn/shop/files/Watch_Listen.png?v=1759911456&width=700";
 
-      const videoCards = [
-        {
-          title: "Your Words Reflect Your State of Mind",
-          subtitle: "(Chapter 1 Verse 3)",
-          description:
-            "In Chapter 1 Verse 3 of Geeta, learn how your words reflect your state of mind. Dive into the teachings of BhagavadGita with Chinmaya Mission. Emotional distress and inner conflict can cloud judgment and lead to indiscriminate and disrespectful speech, even towards those we deeply respect. It is essential to maintain emotional control and clarity of thought to communicate effectively and respectfully, especially in moments of intense emotion or conflict.",
-          thumbnail: COMMON_THUMBNAIL,
-          youtubeLink:
-            "https://dfm54yknoh01p.cloudfront.net/Watch-Listen/1-Your-words-reflect-your-state-of-Mind.mp4",
-          pendriveLink: "https://a1mrxe-5t.myshopify.com/collections/media-pendrive/products/the-holy-geeta-video-talks-on-pendrive-56a",
-          quote:
-            "Inspirations from the Master - Short Inspiring excerpts from the Holy Geeta. Talks of H.H.Swami Chinmayananda presented by Chinmaya Mission.",
-        },
-        {
-          title: "Keep Your Motives Pure!",
-          subtitle: "(Chapter 1 Verse 7)",
-          description:
-            "The moral drawn from Swami Chinmayananda’s teachings is that true leadership requires a balance between strength, empathy, and clear-minded discrimination. A leader must not only have the external skills of strategy and power but also the inner qualities of compassion and righteousness. Mental stability and alignment with a higher purpose (dharma) are essential for making sound decisions and inspiring others. In times of doubt and confusion, one must seek clarity and act with moral conviction, ensuring that actions are in line with the greater good.",
-          thumbnail: COMMON_THUMBNAIL,
-          youtubeLink: "https://dfm54yknoh01p.cloudfront.net/Watch-Listen/2-Keep-your-motives-Pure!.mp4",
-          pendriveLink: "https://a1mrxe-5t.myshopify.com/collections/media-pendrive/products/the-holy-geeta-video-talks-on-pendrive-56a",
-          quote:
-            "Inspirations from the Master - Short Inspiring excerpts from the Holy Geeta. Talks of H.H.Swami Chinmayananda presented by Chinmaya Mission.",
-        },
-        {
-          title: "You Change, World Will Change!",
-          subtitle: "(Chapter 2 Verse 3)",
-          description:
-              "This is not time to run away from life. You change and the world will change.",
-            thumbnail: COMMON_THUMBNAIL,
-          youtubeLink: "https://dfm54yknoh01p.cloudfront.net/Watch-Listen/3-You-change-the-world-will-change!.mp4",
-          pendriveLink: "https://a1mrxe-5t.myshopify.com/collections/media-pendrive/products/the-holy-geeta-video-talks-on-pendrive-56a",
-          quote:
-            "Inspirations from the Master - Short Inspiring excerpts from the Holy Geeta. Talks of H.H.Swami Chinmayananda presented by Chinmaya Mission.",
-        },
-      ];
+    const videoCards = [
+      {
+        title: "Your Words Reflect Your State of Mind",
+        subtitle: "(Chapter 1 Verse 3)",
+        description:
+          "In Chapter 1 Verse 3 of Geeta, learn how your words reflect your state of mind. Dive into the teachings of BhagavadGita with Chinmaya Mission. Emotional distress and inner conflict can cloud judgment and lead to indiscriminate and disrespectful speech, even towards those we deeply respect. It is essential to maintain emotional control and clarity of thought to communicate effectively and respectfully, especially in moments of intense emotion or conflict.",
+        thumbnail: COMMON_THUMBNAIL,
+        youtubeLink:
+          "https://dfm54yknoh01p.cloudfront.net/Watch-Listen/1-Your-words-reflect-your-state-of-Mind.mp4",
+        pendriveLink: "https://a1mrxe-5t.myshopify.com/collections/media-pendrive/products/the-holy-geeta-video-talks-on-pendrive-56a",
+        quote:
+          "Inspirations from the Master - Short Inspiring excerpts from the Holy Geeta. Talks of H.H.Swami Chinmayananda presented by Chinmaya Mission.",
+      },
+      {
+        title: "Keep Your Motives Pure!",
+        subtitle: "(Chapter 1 Verse 7)",
+        description:
+          "The moral drawn from Swami Chinmayananda’s teachings is that true leadership requires a balance between strength, empathy, and clear-minded discrimination. A leader must not only have the external skills of strategy and power but also the inner qualities of compassion and righteousness. Mental stability and alignment with a higher purpose (dharma) are essential for making sound decisions and inspiring others. In times of doubt and confusion, one must seek clarity and act with moral conviction, ensuring that actions are in line with the greater good.",
+        thumbnail: COMMON_THUMBNAIL,
+        youtubeLink: "https://dfm54yknoh01p.cloudfront.net/Watch-Listen/2-Keep-your-motives-Pure!.mp4",
+        pendriveLink: "https://a1mrxe-5t.myshopify.com/collections/media-pendrive/products/the-holy-geeta-video-talks-on-pendrive-56a",
+        quote:
+          "Inspirations from the Master - Short Inspiring excerpts from the Holy Geeta. Talks of H.H.Swami Chinmayananda presented by Chinmaya Mission.",
+      },
+      {
+        title: "You Change, World Will Change!",
+        subtitle: "(Chapter 2 Verse 3)",
+        description:
+          "This is not time to run away from life. You change and the world will change.",
+        thumbnail: COMMON_THUMBNAIL,
+        youtubeLink: "https://dfm54yknoh01p.cloudfront.net/Watch-Listen/3-You-change-the-world-will-change!.mp4",
+        pendriveLink: "https://a1mrxe-5t.myshopify.com/collections/media-pendrive/products/the-holy-geeta-video-talks-on-pendrive-56a",
+        quote:
+          "Inspirations from the Master - Short Inspiring excerpts from the Holy Geeta. Talks of H.H.Swami Chinmayananda presented by Chinmaya Mission.",
+      },
+    ];
 
-      const videoSection = document.getElementById("videoSection");
+    const videoSection = document.getElementById("videoSection");
 
-      videoCards.forEach((card, index) => {
-        const cardElement = document.createElement("div");
-        cardElement.className = `card-equal rounded-3xl overflow-hidden bg-gradient-to-br from-secondary/20 via-white to-secondary/10 shadow-xl border border-secondary/30 p-6 flex flex-col fade-in hover:scale-[1.02] hover:shadow-2xl transition-all duration-300`;
-        cardElement.style.animationDelay = `${index * 0.1}s`;
+    videoCards.forEach((card, index) => {
+      const cardElement = document.createElement("div");
+      cardElement.className = `card-equal rounded-3xl overflow-hidden bg-gradient-to-br from-secondary/20 via-white to-secondary/10 shadow-xl border border-secondary/30 p-6 flex flex-col fade-in hover:scale-[1.02] hover:shadow-2xl transition-all duration-300`;
+      cardElement.style.animationDelay = `${index * 0.1}s`;
 
-        cardElement.innerHTML = `
+      cardElement.innerHTML = `
           <div class="card-content text-center flex flex-col flex-grow">
             <div class="w-full h-48 rounded-2xl overflow-hidden shadow-lg mb-5 relative cursor-pointer video-container" 
                 data-video-link="${card.youtubeLink}">
@@ -255,9 +244,11 @@
             </div>
 
             <div class="card-actions">
-              <button onclick="window.open('${card.pendriveLink}','_blank'" class="bg-primary hover:bg-primary/90 text-white px-4 py-3 rounded-full font-semibold shadow-md text-sm transition-all font-Anek_Latin mb-5 w-full">
-                <i class="fas fa-save pendrive-icon"></i> Get Pendrive Collection
-              </button>
+             <button data-pendrive="${card.pendriveLink}"
+              class="pendrive-btn bg-primary hover:bg-primary/90 text-white px-4 py-3 rounded-full font-semibold shadow-md text-sm transition-all font-Anek_Latin mb-5 w-full">
+              <i class="fas fa-save pendrive-icon"></i> Get Pendrive Collection
+            </button>
+
               <div class="bg-gradient-to-r from-secondary/20 via-secondary/10 to-secondary/20 rounded-xl py-3 px-4 text-sm font-medium text-primary shadow-inner w-full font-Anek_Latin">
                 "${card.quote}"
               </div>
@@ -265,59 +256,68 @@
           </div>
         `;
 
-        videoSection.appendChild(cardElement);
+      videoSection.appendChild(cardElement);
 
-        const videoContainer = cardElement.querySelector(".video-container");
-        videoContainer.addEventListener("click", () =>
-          openModal(card.youtubeLink)
-        );
-      });
+      const videoContainer = cardElement.querySelector(".video-container");
+      videoContainer.addEventListener("click", () =>
+        openModal(card.youtubeLink)
+      );
+    });
 
-      const modal = document.getElementById("videoModal");
-      const videoContainer = document.getElementById("videoContainer");
-      const closeBtn = document.getElementById("closeModal");
+    const modal = document.getElementById("videoModal");
+    const videoContainer = document.getElementById("videoContainer");
+    const closeBtn = document.getElementById("closeModal");
 
-      function openModal(link) {
-        videoContainer.innerHTML = ""; // clear old content
+    function openModal(link) {
+      videoContainer.innerHTML = ""; // clear old content
 
-        let element;
+      let element;
 
-        if (link.includes("youtube.com") || link.includes("youtu.be")) {
-          // 🎬 YouTube Video
-          const videoId = link.split("v=")[1]?.split("&")[0] || link.split("/").pop();
-          element = document.createElement("iframe");
-          element.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-          element.allow =
-            "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-          element.allowFullscreen = true;
-          element.className = "absolute top-0 left-0 w-full h-full";
-        } else {
-          // 🎥 Direct MP4 / CDN Video
-          element = document.createElement("video");
-          element.src = link;
-          element.controls = true;
-          element.autoplay = true;
-          element.className = "absolute top-0 left-0 w-full h-full rounded-xl";
-        }
-
-        videoContainer.appendChild(element);
-        modal.classList.remove("hidden");
-        document.body.style.overflow = "hidden";
+      if (link.includes("youtube.com") || link.includes("youtu.be")) {
+        // 🎬 YouTube Video
+        const videoId = link.split("v=")[1]?.split("&")[0] || link.split("/").pop();
+        element = document.createElement("iframe");
+        element.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+        element.allow =
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+        element.allowFullscreen = true;
+        element.className = "absolute top-0 left-0 w-full h-full";
+      } else {
+        // 🎥 Direct MP4 / CDN Video
+        element = document.createElement("video");
+        element.src = link;
+        element.controls = true;
+        element.autoplay = true;
+        element.className = "absolute top-0 left-0 w-full h-full rounded-xl";
       }
 
-      function closeModal() {
-        modal.classList.add("hidden");
-        videoContainer.innerHTML = "";
-        document.body.style.overflow = "auto";
-      }
+      videoContainer.appendChild(element);
+      modal.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+    }
 
-      closeBtn.addEventListener("click", closeModal);
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) closeModal();
-      });
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeModal();
-      });
-    </script>
-  </body>
+    function closeModal() {
+      modal.classList.add("hidden");
+      videoContainer.innerHTML = "";
+      document.body.style.overflow = "auto";
+    }
+
+    closeBtn.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+    // Attach click event to all pendrive buttons
+    document.addEventListener("click", function (e) {
+      if (e.target.closest(".pendrive-btn")) {
+        const btn = e.target.closest(".pendrive-btn");
+        const url = btn.getAttribute("data-pendrive");
+        window.open(url, "_blank");
+      }
+    });
+  </script>
+</body>
+
 </html>
